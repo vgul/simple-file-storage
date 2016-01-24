@@ -1,4 +1,4 @@
-/
+/ # just for copy and paste
   # vim:tabstop=2:expandtab:shiftwidth=2
 
 - page_head = "Listing Stored Files" 
@@ -6,23 +6,36 @@
 - if session[:user_id]
     - page_head = "#{page_head} [#{session[:user_id]}]"
     
-
-
 h1 = page_head
 
+- if session[:user_id]
+  p style="text-align: right;"
+    = link_to "Logout", sessions_destroy_path, class: "btn btn-primary", :method => :delete
 
 br/
+
+
+/ It doesn't work from non-native action. See below
+/- if !@storage.errors.empty?
+    .alert.alert-error
+      ul
+        - @storage.errors.full_messages.each do |msg|
+          li = msg
+
+/ Own approach for messaging. See storages#create when error occured
+- if !flash[:creation_error].blank?
+    .alert.alert-error 
+      ul
+        - flash[:creation_error].each do |msg|
+          li = msg
+
+
 - if !flash[:notice].blank?
     .alert.alert-info = flash[:notice]
 
 - if !flash[:alert].blank?
     .alert.alert-warning = flash[:alert]
 
-- if @storage and !@storage.errors.empty?
-    .alert.alert-error
-      ul
-        - @storages.errors.full_messages.each do |msg|
-          li = msg
 
 br/
 

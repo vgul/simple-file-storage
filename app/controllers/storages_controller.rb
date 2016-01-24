@@ -41,7 +41,10 @@ class StoragesController < ApplicationController
       # for form_for tag in view
       @storage = Storage.new
 
+      # To list uploaded files
       @storages = Storage.all.where( user: session[:user_id] ).sort( _id:-1 )
+
+      # Discard filtering. For debug
       #@storages = Storage.all.sort( _id:-1 )
 
     end
@@ -58,7 +61,11 @@ class StoragesController < ApplicationController
     if @storage.save
       redirect_to "/", notice: "The file '#{File.basename(@storage.file.to_s)}' has been uploaded."
     else
-      render new_storage_path # ? or  just "new" ??
+
+      # Approach to pass error message to non-native action and view
+      flash[:creation_error] = @storage.errors.full_messages
+      redirect_to root_path # instead new_storage_path
+
     end
  
   end
