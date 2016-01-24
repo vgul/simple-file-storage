@@ -1,6 +1,6 @@
 # Simple File Storage
 
-### See Russian comments video to implementation http://youtube.com
+### See Russian comments video about implementation http://youtube.com
 
 ## Task Description
 

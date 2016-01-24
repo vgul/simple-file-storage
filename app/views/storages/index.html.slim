@@ -65,9 +65,7 @@ br/
 
 - if session[:user_id]
 
-  p style="text-align: right;"
-    = link_to "Logout", sessions_destroy_path, class: "btn btn-primary", :method => :delete
-
+  / To use native controller/view
   /= link_to "New File", new_storage_path, class: "btn btn-primary"
 
   / One more way to organize button
