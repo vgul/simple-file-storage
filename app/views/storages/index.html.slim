@@ -1,0 +1,104 @@
+/
+  # vim:tabstop=2:expandtab:shiftwidth=2
+
+- page_head = "Listing Stored Files" 
+
+- if session[:user_id]
+    - page_head = "#{page_head} [#{session[:user_id]}]"
+    
+
+
+h1 = page_head
+
+
+br/
+- if !flash[:notice].blank?
+    .alert.alert-info = flash[:notice]
+
+- if !flash[:alert].blank?
+    .alert.alert-warning = flash[:alert]
+
+- if @storage and !@storage.errors.empty?
+    .alert.alert-error
+      ul
+        - @storages.errors.full_messages.each do |msg|
+          li = msg
+
+br/
+
+- if !session[:user_id]
+  table
+    tr
+      td width="80%" 
+        .well
+          = form_tag sessions_create_path do
+
+            = label_tag :username
+            = text_field_tag :username
+
+            = label_tag :password
+            = password_field_tag :password
+
+            br/
+            = submit_tag "Login"
+
+      td style="vertical-align: top; padding-left: 10px;"
+        h3 Actual users
+        ul style="padding-left: 20%;"
+          - @users.each do |user|
+              li = "#{user[:_id]} : #{user[:value]}"
+
+
+
+- if session[:user_id]
+
+  p style="text-align: right;"
+    = link_to "Logout", sessions_destroy_path, class: "btn btn-primary", :method => :delete
+
+  /= link_to "New File", new_storage_path, class: "btn btn-primary"
+
+  / One more way to organize button
+  /a.btn.btn-primary href=new_storage_path  New File
+
+
+  .well
+    = form_for @storage, html: { multipart: true } do |f|
+
+      = f.label :description
+      = f.text_field :description
+
+      = f.label :file
+      = f.file_field :file
+
+      = f.submit "Save", class: "btn btn-primary"
+
+  = link_to 'Back', storages_path
+
+
+  table.table-bordered.table
+    thead
+      tr
+        /th User
+        th File
+        th Description
+        th Thumbnail
+        th Action
+
+    tbody
+      - @storages.each do |storage|
+        tr
+
+          /td = storage.user
+          td = link_to "#{File.basename(storage.file.to_s)}", storage.file_url
+          td = storage.description
+
+          / thumb_picture defined as helper
+          td style="text-align: center;" == thumb_picture( storage )
+
+          td = link_to 'Delete', storage,
+                    data: {:confirm => 'Are you sure?'}, :method => :delete
+
+    br
+
+/= link_to 'New Storage', new_storage_path
+

@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong User:
+  = @storage.user
+p
+  strong File:
+  = @storage.file
+
+= link_to 'Edit', edit_storage_path(@storage)
+'|
+= link_to 'Back', storages_path

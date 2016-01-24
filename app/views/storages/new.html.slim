@@ -1,0 +1,22 @@
+
+h1 New file upload
+
+- if !@storage.errors.empty?
+    .alert.alert-error
+        ul
+            - @storage.errors.full_messages.each do |msg|
+                li = msg
+
+.well
+    = form_for @storage, html: { multipart: true } do |f|
+
+        = f.label :description
+        = f.text_field :description
+
+        = f.label :file
+        = f.file_field :file
+
+        = f.submit "Save", class: "btn btn-primary"
+
+= link_to 'Back', storages_path
+
