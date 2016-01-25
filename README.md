@@ -1,6 +1,6 @@
 # Simple File Storage
 
-### See Russian comments video about implementation http://youtube.com
+### See Russian comments video about implementation hhttps://youtu.be/B0ol-FPHB6E
 
 ## Task Description
 
@@ -34,7 +34,9 @@ mongo  storages_development --eval 'db.storages.find().forEach(printjson)'
 
 Group by and count:
 ```
-https://docs.mongodb.org/ecosystem/tutorial/ruby-mongoid-tutorial/#map-reduce
+mongo storages_development --eval ' db.storages.aggregate( 
+    [{ "$group": {  _id: "$user", count: { $sum: 1} } }] )
+'
 ```
 
 To see chronological list of changes made to files:
