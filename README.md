@@ -39,7 +39,7 @@ mongo storages_development --eval ' db.storages.aggregate(
 '
 ```
 
-To see chronological list of changes made to files:
+To see chronological list of changes made to files (for demo purposes):
 ```
 find . -type f -not -wholename \*public\* -a -not -wholename \*cache\* -a -not -name \*swp -printf '%T+ %p\n' | sort | less -SX
 ```
